@@ -184,6 +184,45 @@ void printLevel(node * root, int level)
 
 }
 
+///root then left then right
+void preOrderTraversal(node * root)
+{
+    //Print the data
+    if(root == 0){
+        return;
+    }
+    printf("%d ", root->data);
+    preOrderTraversal(root->left);
+    preOrderTraversal(root->right);
+
+}
+
+void postOrderTraversal(node * root)
+{
+    if(root==0){
+        return;
+    }
+
+    ///L R D
+    postOrderTraversal(root->left);
+    postOrderTraversal(root->right);
+    printf("%d ", root->data);
+
+}
+
+void inOrder(node * root)
+{
+
+    if(root==0){
+        return;
+    }
+    inOrder(root->left);
+    printf("%d ", root->data);
+    inOrder(root->right);
+
+}
+
+
 void levelOrder(node * root)
 {
     if(root == 0){
@@ -253,7 +292,23 @@ int main()
         //Enqueue a node, then fifo and visit its childre
         //First enquee the left then the right child
         //Algorithm
-        levelOrder(rootPtr);
+        printf("\nLevel Order Traversal:\n");
+       levelOrder(rootPtr);
+
+       printf("\nPre Order Traversal:\n");
+       preOrderTraversal(rootPtr);
+
+       printf("\nPost Order Traversal:\n");
+       postOrderTraversal(rootPtr);
+
+       printf("\nInOrder Traversal:\n");
+       inOrder(rootPtr);
+
+        //Time complexity : O(n)
+        //Space Complexity O(h) prop to log n  O(n) = worst case
+
+
+
 
 
     return 0;
