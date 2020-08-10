@@ -150,21 +150,61 @@ int findHeight(node * root)
 node *  deleteNode(node * root, int data)
 {
     if(root == 0){
-        printf("\nThe tree is empty");
         return root;
     }
 
-    //check the data
-    if(search(root, data) == 0){
-        printf("\nThere is no node with this data");
-        return root;
+    if(data < root->data){
+        root->left = deleteNode(root->left, data);
+    }
+    else if( data > root->data){
+        root->right = deleteNode(root->right, data);
+    }
+    else if ( data == root->data){
+        //Find min in right subtree
+        //No child case
+        if(root->left == 0 && root->right == 0){
+            //Deallocate
+            free(root);
+            root = 0;
+            return root;
+        }
+        //No left child
+        else if(root->left == 0){
+                node * temp = root;
+                root = root->right;
+                free(temp);
+                return root;
+        }
+        //No right child
+        else if(root->right == 0){
+                node * temp = root;
+                root = root->left;
+                free(temp);
+        }
+
+        //Both children present
+        else if(root->right != 0 && root->left != 0){
+            //Search the min in the right sub tree
+            node * minInRTree = findMin(root->right);
+            int val= minInRTree ->data;
+            deleteNode(root, data);
+            root->data = val;
+            return root;
+        }
+
+
+
+
     }
 
 
+    //If the data has only one child, we link that child to the parent of the to be del node
+    //If more than one child. Min from right subtree  or max in leftto the oarent. This will be no left child to that node
 
 
 }
 
+///Also use InOrder traversal and check state if they are in ascending order
 int isBinarySearchTree(node * p, int minValue, int maxValue)
 {
     if(p==0){
@@ -175,6 +215,7 @@ int isBinarySearchTree(node * p, int minValue, int maxValue)
     }
 
 }
+
 
 
 
@@ -324,6 +365,11 @@ int main()
         else{
             printf("\nIt is a BST");
         }
+
+        //Delete a node
+        deleteNode(rootPtr,6);
+        printf("\n");
+        inOrder(rootPtr);
 
 
 
