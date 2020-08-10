@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct node{
 
@@ -54,12 +55,165 @@ int search(node * root, int data)
         else if(root->data == data){
             return 1;
         }
+        //Check wrt to the numerical data
         else if(data<= root->data){
             return search(root->left, data);
         }
         else{
             return search(root->right, data);
         }
+
+}
+
+//For minimum, we can reduce it to finding the minimum in that tee and its respective subtrees
+int recMin(node* p)
+{
+      if(p==0){
+        printf("The tree is empty");
+        return -1;
+    }
+    if(p->left == 0){
+        return p->data;
+    }
+      return recMin(p->left);
+}
+
+int recMax(node*p)
+{
+    if(p==0){
+        printf("The tree is empty");
+        return -1;
+    }
+        if(p->right ==0){
+            return p->data;
+        }
+
+       return recMax(p->right);
+
+}
+
+
+int findMin(node * root)
+{
+
+    //Empty tree
+    if(root==0){
+        printf("The tree is empty");
+        return -1;
+    }
+    node * temp = root;
+    //go to left child
+   while(temp->left != 0){
+    temp = temp->left;
+   }
+
+   return temp->data;
+
+}
+
+int findMaz(node* root)
+{
+    //Root is a local variable
+     if(root==0){
+        printf("The tree is empty");
+        return -1;
+    }
+    node * temp = root;
+    //go to left child
+   while(temp->right != 0){
+    temp = temp->right;
+   }
+
+   return temp->data;
+
+
+}
+
+
+
+int findHeight(node * root)
+{
+    //Leaf node
+    if(root == 0){
+        return  -1;
+    }
+
+    int lh = findHeight(root->left);
+    int rh = findHeight(root->right);
+    int x = rh;
+    if(lh > rh){
+        x = lh;
+    }
+    return   x+1;
+}
+
+node *  deleteNode(node * root, int data)
+{
+    if(root == 0){
+        printf("\nThe tree is empty");
+        return root;
+    }
+
+    //check the data
+    if(search(root, data) == 0){
+        printf("\nThere is no node with this data");
+        return root;
+    }
+
+
+
+
+}
+
+
+void printLevel(node * root, int level)
+{
+    if(root == 0){
+        //Either empty or at leaf node
+        return;
+    }
+    //Reaches the last level in all
+    if(level == 1){
+        printf("%d", root->data);
+    }
+    else if(level >1){
+        printLevel(root->left, level-1);
+        printf(" ");
+        printLevel(root->right, level-1);
+    }
+
+}
+
+void levelOrder(node * root)
+{
+    if(root == 0){
+        printf("\nTree is empty");
+        return;
+    }
+
+    //Use the recurion to find the height and then printBy level
+    int h = findHeight(root);
+    for(int i=0; i<=h; i++){
+        printLevel(root,i);
+        printf("\n");
+    }
+
+    //Create a queue
+    //C++
+   /* queue<node*> q;
+    q.push(root);
+    while(!q.empty()){
+        node * front = q.front();
+        printf("%d", front->data);
+        if(front->left != 0){
+            q.push(front->left);
+        }
+        if(front->right != 0){
+            q.push(front->right);
+        }
+        //Dequeue
+        q.pop();
+    } */
 
 }
 
@@ -70,11 +224,36 @@ int main()
     node * rootPtr;
     rootPtr = 0;
 
+    rootPtr=insert(rootPtr,50);
     rootPtr = insert(rootPtr,16);
     rootPtr= insert(rootPtr,100);
     rootPtr=insert(rootPtr,10);
+    rootPtr=insert(rootPtr,120);
+    rootPtr=insert(rootPtr,80);
+    rootPtr=insert(rootPtr,5);
+    rootPtr=insert(rootPtr,1);
+
+    //Tye minimum will be in Left BST and the maximum in Right BST
+    printf("The maximum and minimum elements from while loop are %d and %d", findMaz(rootPtr), findMin(rootPtr));
+    printf("\n Min and max from recursion is %d and %d", recMin(rootPtr), recMax(rootPtr));
 
 
+    //To find height of the subtree, it will max of left subtree and right subtree +1
+    //Use recursive functions to call for a smaller unit of Left subtree and same for right subtree
+    printf("\nThe height of the trees is %d. Of left st is %d and right st is %d", findHeight(rootPtr), findHeight(rootPtr->left), findHeight(rootPtr->right));
+
+    //Tree transversal
+    //Breadth First- goes to next level only when all the nodes of the same levl are done ltr = level order traversal
+    //depth approach. L Root R , Inorder tranversal == ives sorted lsit
+    // L R root  and , Post Order Traversal
+    //root L R == visiting all the chioldren = preorder
+    //Left always visted before
+
+        ///Level Order - Breadth Traversal
+        //Enqueue a node, then fifo and visit its childre
+        //First enquee the left then the right child
+        //Algorithm
+        levelOrder(rootPtr);
 
 
     return 0;

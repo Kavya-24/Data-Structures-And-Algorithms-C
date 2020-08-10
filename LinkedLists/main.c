@@ -73,7 +73,7 @@ void reverseListRecursively(node * h)
 {
     if(h->next == 0){
         //This is the last node
-        head = p
+        head = h;
         return;
     }
 
