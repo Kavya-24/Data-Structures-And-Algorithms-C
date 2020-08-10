@@ -165,24 +165,18 @@ node *  deleteNode(node * root, int data)
 
 }
 
-
-void printLevel(node * root, int level)
+int isBinarySearchTree(node * p, int minValue, int maxValue)
 {
-    if(root == 0){
-        //Either empty or at leaf node
-        return;
+    if(p==0){
+        return 1;
     }
-    //Reaches the last level in all
-    if(level == 1){
-        printf("%d", root->data);
-    }
-    else if(level >1){
-        printLevel(root->left, level-1);
-        printf(" ");
-        printLevel(root->right, level-1);
+    if(p->data >= minValue && p->data < maxValue && isBinarySearchTree(p->left, minValue, p->data) && isBinarySearchTree(p->right, p->data, maxValue) ){
+        return 1;
     }
 
 }
+
+
 
 ///root then left then right
 void preOrderTraversal(node * root)
@@ -222,6 +216,23 @@ void inOrder(node * root)
 
 }
 
+void printLevel(node * root, int level)
+{
+    if(root == 0){
+        //Either empty or at leaf node
+        return;
+    }
+    //Reaches the last level in all
+    if(level == 1){
+        printf("%d", root->data);
+    }
+    else if(level >1){
+        printLevel(root->left, level-1);
+        printf(" ");
+        printLevel(root->right, level-1);
+    }
+
+}
 
 void levelOrder(node * root)
 {
@@ -229,10 +240,10 @@ void levelOrder(node * root)
         printf("\nTree is empty");
         return;
     }
-
     //Use the recurion to find the height and then printBy level
     int h = findHeight(root);
-    for(int i=0; i<=h; i++){
+
+    for(int i=0; i<=h+1; i++){
         printLevel(root,i);
         printf("\n");
     }
@@ -263,14 +274,12 @@ int main()
     node * rootPtr;
     rootPtr = 0;
 
-    rootPtr=insert(rootPtr,50);
-    rootPtr = insert(rootPtr,16);
-    rootPtr= insert(rootPtr,100);
-    rootPtr=insert(rootPtr,10);
-    rootPtr=insert(rootPtr,120);
-    rootPtr=insert(rootPtr,80);
-    rootPtr=insert(rootPtr,5);
+    rootPtr=insert(rootPtr,7);
+    rootPtr=insert(rootPtr,4);
+    rootPtr=insert(rootPtr,9);
     rootPtr=insert(rootPtr,1);
+    rootPtr=insert(rootPtr,6);
+
 
     //Tye minimum will be in Left BST and the maximum in Right BST
     printf("The maximum and minimum elements from while loop are %d and %d", findMaz(rootPtr), findMin(rootPtr));
@@ -306,6 +315,15 @@ int main()
 
         //Time complexity : O(n)
         //Space Complexity O(h) prop to log n  O(n) = worst case
+
+        //check the binary search trees
+        int val = isBinarySearchTree(rootPtr, findMin(rootPtr), findMaz(rootPtr));
+        if(val == 0){
+            printf("\nIt is not a BST");
+        }
+        else{
+            printf("\nIt is a BST");
+        }
 
 
 
