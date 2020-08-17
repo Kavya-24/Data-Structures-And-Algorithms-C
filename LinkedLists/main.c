@@ -9,7 +9,10 @@ struct Node{
     char * name;
     int age;
     struct Node * next;
+    struct Node * prev;
 };
+
+
 
 typedef struct Node  node;
 ///Global head for recursive reverse
@@ -141,6 +144,8 @@ node *  deleteNode(node * head, int k)
     return head;
 }
 
+
+///To convert it in circular linked list, use a pointer to the current and point its next to head.
 
 int main()
 {

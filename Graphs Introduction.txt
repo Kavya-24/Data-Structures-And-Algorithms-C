@@ -1,0 +1,23 @@
+A graph G, is a set of vertices V and edges E.
+G = (V,E) (Ordered Pair)
+In directed edges (Origin, Destnination)
+In undirected, order does not matter (Facebook eg)
+Represneted as {u,v}
+Digraph : All directed edges (Web pages)
+Weighted and unweighted graphs
+Dense graph : many edges : Adjacency matrix
+Sparse graph : Less edges : Adjacency Lists
+Path : No vertice repeted
+Walk: Repeted vertices (Edges can be repeated)
+Trail : A walk with no edges repeated
+Indirect MatriX- Adjacency Matrix for Indirect Edges : Symetric. Time complexoty = 2O(V) = O(V)
+Constant time for looking if two elements are connected if searching in vertex list is not required
+In the adjacency matrix, if we have weights, we can replace the 1's by the weight values and the ones without edges as very large values close to infinity or any value that is never a valid edge weight
+If the graph is dense, then it is okay to store the extra small amount of zeroes. but if it is sparse
+In case of sparse graph, we use list {1,2,3} type
+        
+To make this work, we can make an array of pointers int *A[n]
+A[0] =  (int *) malloc( 10 * sizeof(int) )
+//A Linked List mapped as Adjacency list
+//A Binary Search Tree mapped to an Adjacecy list
+       
