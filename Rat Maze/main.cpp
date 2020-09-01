@@ -7,8 +7,8 @@ int n = 4;
 void printMaze(int arr[4][4])
 {
 
-     for(int i=0; i<n;i++){
-        for(int j=0; j<n;j++){
+     for(int i=0; i<4;i++){
+        for(int j=0; j<4;j++){
            cout<<arr[i][j]<<" ";
         }
         cout<<endl;
@@ -16,9 +16,9 @@ void printMaze(int arr[4][4])
 
 }
 
-bool checkCoordinates(int x, int y)
+bool checkCoordinates(int x, int y, int maze[4][4])
 {
-    if(x < 0 || y<0 || x>=n || y>=n){
+    if(x < 0 || y<0 || x>=n || y>=n || maze[x][y] == 0){
         return false;
     }
 
@@ -27,33 +27,42 @@ bool checkCoordinates(int x, int y)
 
 bool solve(int   maze[4][4], int x, int y, int sol[4][4])
 {
+
+    //If first element is not 1 (0,0) then it will not be able to go further
+    if(maze[0][0] == 0){
+        return false;
+    }
+
     //Check if it has reached the end
-    if(x== n-1 && y== n-1 && maze[x][y] == 1 && sol[x][y] == 1){
+    if(x== 3 && y== 3 && maze[x][y] == 1){
+         //Base condition
+         sol[x][y] = 1;
         return true;
     }
 
-    if(checkCoordinates(x,y) == true){
 
-        sol[x][y] = 1;
+    if(checkCoordinates(x,y, maze) == true){
 
-        //Go in x dirn
-        if(solve(maze, x+1, y, sol) == true){
-         return true;
-        }
+            sol[x][y] = 1;
 
-        //Go in y
-        if(solve(maze, x, y+1, sol)){
+            //Go in x dirn
+            if(solve(maze, x+1, y, sol) == true){
                 return true;
+            }
+
+            //Go in y
+            if(solve(maze, x, y+1, sol) == true){
+                return true;
+            }
+
+
+            //If this is not possible,
+            //Backtrack
+
+            sol[x][y] = 0;
+            return false;
+
         }
-
-
-        //If this is not possible,
-        //Backtrack
-
-        sol[x][y] = 0;
-        return false;
-
-    }
 
 
     return false;
@@ -104,6 +113,7 @@ int main()
     cout<<"The input maze is given by\n";
     printMaze(arr);
 
+    cout<<"\nThe solution is given by:\n";
     solveMaze(arr);
 
 
