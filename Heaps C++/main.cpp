@@ -155,17 +155,64 @@ void heapSort(int arr[], int n)
     return;
 }
 
+int maximum(int arr[], int n)
+{
+    return arr[0];
+}
+
+int extractMaximum(int arr[], int n)
+{
+    int y = arr[0];
+    int lastElement = arr[n-1];
+    arr[0] = lastElement;
+    //Now we have (n-1) terms with children as heaps, but only master parent as non-heap
+    max_heapify(arr, n-1, 0);
+
+
+
+
+    return y;
+}
+
+void createAndInsert(int arr[], int val, int n)
+{
+    arr[n-1] = val;
+    int i = (n-1);      //(Index)
+    while(i>=0){
+        int parent = (i-1)/2;
+
+        if(arr[parent] < arr[i]){
+            swapData(arr+parent, arr+i);
+            i = parent;
+        }
+
+        else{
+            break;
+        }
+
+
+
+    }
+
+    printf("\nThe heap after insertion is given by:\n");
+    printHeap(arr,n);
+
+}
+
 int main()
 {
 
     printf("Enter the n or total number of element: ");
     scanf("%d", &n);
 
-    int arr[n];
-    int arr2[n];
+    int arr[n];         //Max Heap
+    int arr2[n];       //Min Heap
+    int arr3[n];       //Priority Queue
+
     for(int i=0; i<n;i++){
         cin>>arr[i];
         arr2[i] = arr[i];
+        arr3[i] = arr[i];
     }
 
     printf("\nMAX HEAPS:\n");
@@ -190,6 +237,66 @@ int main()
     printf("\nThe Heap built from the array is given by:\n");
     buildMinumumHeap(arr, n);
     printHeap(arr,n);
+
+    ///Priority Queues are implemented using heaps
+    //The four basic operations are given by
+    //1. Insert(S,x)
+    //2. Extract-Max(S)
+    //3. Maximum(S)
+    //4. Increase-Key (S,x,k)       (k is the new key)
+    ///
+
+    printf("\nThe operations for priority queue are:\n");
+
+    //Build a max heap from arr3 for Priority queue
+    buildHeap(arr3,n);
+
+    //Print the maximum
+    printf("\nThe maximum is given by %d", maximum(arr3, n));
+
+    //Print and extract the maximum
+    int c = extractMaximum(arr3, n);
+    printf("\nThe maximum is given by %d", c);
+    printf("\nThe heap after removing this (Extracting maximum) is:\n");
+    printHeap(arr3, n-1);
+
+    //Now we have a new array where the maximum is extracted
+    int k, ind;
+    printf("\nEnter the index of the element you want to change: ");
+    cin>>ind;
+    printf("\nEnter the value: ");
+    cin>>k;
+
+    //If the k is less than the value, then we wont  then (DONT TAKE n-1)
+    if(k < arr3[ind]){
+        cout<<"Key can not be less than the root element";
+    }
+    else{
+        arr3[ind] = k;
+        while(ind >= 0){
+            //Find its parent and compare
+            int parentIndex = (ind-1)/2;
+                if(arr3[parentIndex] < arr3[ind]){
+                    swapData(arr3+parentIndex, arr3 + ind);
+                    ind = parentIndex;
+                }
+                else{
+                    break;
+                }
+
+        }
+    }
+
+    printf("\nThe array after changing the value is given by:\n");
+    printHeap(arr3, n-1);
+
+    //Now insert a new key with a certain value
+    int val;
+    printf("\nEnter the value of the key you want to insert in the heap: ");
+    cin>>val;
+
+    //arr[n-1] is free
+    createAndInsert(arr3,val,n);
 
 
 
