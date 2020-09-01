@@ -21,6 +21,48 @@ node * getNewNode(int data)
     return temp;
 
 }
+
+//Print mirror tree
+void mirror(node* node)
+{
+    node * t = node;
+
+    node* temp = (node*)malloc(sizeof(node));
+
+    if(t == NULL){
+        return;
+    }
+
+    //What we want to do is to create
+    temp = t->left;
+    t->left = t->right;
+    t->right = temp;
+
+
+    mirror(t->left);
+    mirror(t->right);
+
+}
+
+//Print the nodes at a distance k from the root node
+// function should print the nodes at k distance from root
+void printKdistance(struct node *root, int k)
+{
+  if(root == 0){
+      return;
+  }
+  if(k == 0){
+      printf("%d ", root->data);
+  }
+
+ else if(k >0){
+        //Go in left and right both directions
+        printKdistance(root->left, k-1);
+        printKdistance(root->right, k-1);
+  }
+
+}
+
 //Pass the address of rootpointer
 node *  insert(node * rootNode , int data)
 {
