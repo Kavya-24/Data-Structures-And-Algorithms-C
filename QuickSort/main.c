@@ -15,11 +15,18 @@ void swapData(int * a, int * b)
 
 int partitionPosition(int arr[], int n, int l, int r)
 {
+
+    if(l==r){
+        //Case when there is no
+        return l;
+    }
+
     int pivot = arr[l];
     int i = l;
     int j = r+1;
 
     //Use do whiles
+
 
     while(i<j){
         do{
@@ -42,6 +49,10 @@ int partitionPosition(int arr[], int n, int l, int r)
     //j is the pivot position
     swapData(arr+l, arr+j);
 
+
+    //If all the elements are equal, then j will remain at last element and i will come there. At that moment, the loop will break
+    //The partition returned will be the last element
+    //The right half will be empty
     //Partition
     return j;
 
