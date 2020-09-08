@@ -13,6 +13,19 @@ void swapData(int * a, int * b)
 
 }
 
+int randomIndex(int l, int r)
+{
+    //Return a random integer between l,r inclusive
+
+    //The random raneg is given by
+    int y = (rand() %(r-l+1)) + l;
+    return y;
+
+
+}
+
+
+
 int partitionPosition(int arr[], int n, int l, int r)
 {
 
@@ -58,6 +71,26 @@ int partitionPosition(int arr[], int n, int l, int r)
 
 }
 
+void randomSort(int arr[], int n, int l, int r)
+{
+    if(l==r){
+        return;
+    }
+
+    //Get the random int
+    //Get random partition
+   if(l<r){
+    int index = randomIndex(l,r);
+    swapData(arr+index, arr+l);
+
+    int p  = partitionPosition(arr,n,l,r);
+
+    randomSort(arr,n,l,p);
+    randomSort(arr,n,p+1,r);
+   }
+    return;
+}
+
 void quickSort(int arr[], int n, int l, int r)
 {
 
@@ -89,14 +122,21 @@ int main()
   printf("Enter the number of elements: ");
   scanf("%d", &n);
 
-  int arr[n];
+  int arr[n], arr2[n];
   for(int i=0; i<n;i++){
     scanf("%d", &arr[i]);
+    arr2[i] = arr[i];
   }
 
   quickSort(arr, n, 0, n-1);
   for(int i=0; i<n;i++){
     printf("%d ", arr[i]);
+  }
+    printf("\nThe output using random sort:\n");
+    randomSort(arr2, n,0,n-1 );
+
+   for(int i=0; i<n;i++){
+    printf("%d ", arr2[i]);
   }
 
     return 0;
