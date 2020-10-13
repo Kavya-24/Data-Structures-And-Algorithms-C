@@ -31,19 +31,6 @@ void max_heapify(int arr[], int n, int indexRoot)
      }
 
      //if the left child is greater
-/*
-1
-3
-5
-4
-6
-13
-10
-9
-8
-15
-17
-*/
      int largerIndex = indexRoot;
      if(leftData > arr[largerIndex] && indexLeft < n){
         //
@@ -143,12 +130,10 @@ void heapSort(int arr[], int n)
         //In the already built heap, the top element (First element is the maximum)
         //Take it to the last (SWAP)
         //Then, heapify. This will
-
         swapData(arr, arr+x);
-
         //Reduce the size of the Heap
         max_heapify(arr, x, 0);
-
+       printf("\n");
     }
 
 
@@ -223,7 +208,7 @@ int main()
     printf("\nThe Heap built from the array is given by:\n");
     buildHeap(arr, n);
     printHeap(arr,n);
-
+    printf("\n");
     //Print a sorted list
     //Create an empty array
     heapSort(arr, n);
@@ -238,6 +223,7 @@ int main()
     buildMinumumHeap(arr, n);
     printHeap(arr,n);
 
+    /*
     ///Priority Queues are implemented using heaps
     //The four basic operations are given by
     //1. Insert(S,x)
@@ -297,7 +283,7 @@ int main()
 
     //arr[n-1] is free
     createAndInsert(arr3,val,n);
-
+    */
 
 
     return 0;
