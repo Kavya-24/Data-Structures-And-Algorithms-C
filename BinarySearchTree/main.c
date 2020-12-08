@@ -227,10 +227,9 @@ node *  deleteNode(node * root, int data)
         //Both children present
         else if(root->right != 0 && root->left != 0){
             //Search the min in the right sub tree
-            node * minInRTree = findMin(root->right);
-            int val= minInRTree ->data;
-            deleteNode(root, data);
+            int val= findMin(root->data);
             root->data = val;
+            deleteNode(root, data);
             return root;
         }
 
