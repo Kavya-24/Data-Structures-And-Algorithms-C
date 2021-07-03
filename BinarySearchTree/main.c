@@ -251,7 +251,7 @@ int isBinarySearchTree(node * p, int minValue, int maxValue)
     if(p==0){
         return 1;
     }
-    if(p->data >= minValue && p->data < maxValue && isBinarySearchTree(p->left, minValue, p->data) && isBinarySearchTree(p->right, p->data, maxValue) ){
+    if(p->data >= minValue && p->data <= maxValue && isBinarySearchTree(p->left, minValue, p->data) && isBinarySearchTree(p->right, p->data, maxValue) ){
         return 1;
     }
 
