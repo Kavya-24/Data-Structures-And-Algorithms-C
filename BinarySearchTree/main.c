@@ -247,14 +247,54 @@ node *  deleteNode(node * root, int data)
 
 ///Also use InOrder traversal and check state if they are in ascending order
 int isBinarySearchTree(node * p, int minValue, int maxValue)
-{
-    if(p==0){
-        return 1;
-    }
-    if(p->data >= minValue && p->data <= maxValue && isBinarySearchTree(p->left, minValue, p->data) && isBinarySearchTree(p->right, p->data, maxValue) ){
-        return 1;
-    }
+{   
+        //C++
+        //gMin and gMax are global min and max pointers 
+        //The previpus code failed. use sample cases
+        // [2,1,3]
+        // [5,1,4,null,null,3,6]
+        // [1,1]
+        // [3,1,5,0,2,4,6,null,null,null,3]
+        // [1,1]
+        // [1,null,1]
+        // [1]
+        // [-1,9,0]
+        // [1,null,2,null,3,null,2]
 
+        if(root == nullptr){
+            return true;
+        }
+        
+        
+        
+        if(root->left != nullptr){
+            if(root->val <= root->left->val){
+                
+                return false;
+            }
+        }
+        
+        if(root->right != nullptr){
+            if(root->val >= root->right->val){
+                
+                return false;
+            }
+        }
+        
+        
+        if( (root->val > m  || root == gMin ) && (root->val < M || root == gMax)
+            && validate(root->left,m,root->val) == true 
+            && validate(root->right, root->val, M) == true){
+            
+            return true;
+        }
+        
+        
+            
+            
+        return false;
+        
+    
 }
 
 
